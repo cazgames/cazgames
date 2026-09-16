@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caz Games Hub</title>
+  <title>Caz Arcade</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -145,8 +145,8 @@
 <body>
 
   <header>
-    <h1>Caz Games Hub</h1>
-    <p>Select any game or search below</p>
+    <h1>Caz Arcade</h1>
+    <p>Fast browser games</p>
     <input type="text" id="searchBar" placeholder="🔍 Search games..." oninput="filterGames()">
   </header>
 
@@ -167,32 +167,41 @@
   <script>
     const games = [
       { 
-        title: "Minecraft 3D (Eaglercraft)", 
+        title: "FNAF 3D Survival", 
+        cat: "3D Horror", 
+        icon: "🐻", 
+        type: "embed",
+        // Direct WebGL 3D port with full power management & camera controls
+        url: "https://wellsousaaa.github.io/Five-Nights-at-Freddys-Web/" 
+      },
+      { 
+        title: "Block Craft 3D", 
         cat: "3D Sandbox", 
         icon: "🟩", 
         type: "embed",
+        // Pure clean 3D client without branding banners
         url: "https://eaglercraft1-8.github.io/" 
       },
       { 
         title: "Cookie Clicker", 
         cat: "Idle", 
         icon: "🍪", 
-        type: "popup", // Launches clean in-page popup window so it bypasses the iframe anti-cheat
+        type: "popup", 
         url: "https://ozh.github.io/cookieclicker/" 
       },
       { 
         title: "Paper Minecraft 2D", 
-        cat: "Sandbox", 
+        cat: "2D Sandbox", 
         icon: "⛏️", 
         type: "embed",
         url: "https://turbowarp.org/10128407/embed" 
       },
       { 
-        title: "FNAF 1 (Full Port)", 
-        cat: "Horror", 
-        icon: "🐻", 
+        title: "Slope 3D", 
+        cat: "3D Runner", 
+        icon: "🟢", 
         type: "embed",
-        url: "https://turbowarp.org/225895732/embed" 
+        url: "https://turbowarp.org/535492211/embed" 
       },
       { 
         title: "Tower Building", 
@@ -214,13 +223,6 @@
         icon: "🐦", 
         type: "embed",
         url: "https://turbowarp.org/694936302/embed" 
-      },
-      { 
-        title: "Slope 3D", 
-        cat: "Runner", 
-        icon: "🟢", 
-        type: "embed",
-        url: "https://turbowarp.org/535492211/embed" 
       }
     ];
 
