@@ -5,128 +5,260 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caz Games Hub</title>
   <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
     body {
       margin: 0;
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
+      padding: 24px 16px;
+      box-sizing: border-box;
     }
-    h1 { color: #38bdf8; margin-bottom: 5px; }
-    p { color: #94a3b8; margin-top: 0; }
+    header {
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      color: var(--accent);
+      margin: 0 0 6px 0;
+      font-size: 2.2rem;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: var(--muted);
+      margin: 0 0 16px 0;
+    }
+    #searchBar {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: var(--card-bg);
+      color: var(--text);
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #searchBar:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 16px;
       width: 100%;
-      max-width: 800px;
-      margin-top: 20px;
+      max-width: 1000px;
     }
     .card {
-      background: #1e293b;
-      padding: 20px;
+      background: var(--card-bg);
+      padding: 18px 12px;
       border-radius: 12px;
       text-align: center;
       cursor: pointer;
       border: 1px solid #334155;
-      transition: transform 0.15s, border-color 0.15s;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .card:hover { transform: translateY(-4px); border-color: #38bdf8; }
-    .icon { font-size: 2.5rem; margin-bottom: 8px; }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .icon {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+    .card h3 {
+      margin: 0 0 4px 0;
+      font-size: 1.05rem;
+    }
+    .card span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    #emptyMsg {
+      display: none;
+      color: var(--muted);
+      margin-top: 32px;
+      font-size: 1.1rem;
+    }
+    /* Modal / Game Player */
     #modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.92);
+      background: rgba(0, 0, 0, 0.94);
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      z-index: 100;
     }
     #modal.open { display: flex; }
-    iframe {
-      width: 90vw;
-      max-width: 960px;
-      height: 75vh;
-      border: 2px solid #38bdf8;
-      border-radius: 8px;
-      background: black;
-    }
     .controls {
       display: flex;
       justify-content: space-between;
-      width: 90vw;
-      max-width: 960px;
+      align-items: center;
+      width: 92vw;
+      max-width: 980px;
       margin-bottom: 10px;
     }
-    .close-btn {
-      padding: 8px 16px;
-      background: #ef4444;
-      color: white;
+    #gameTitle {
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      padding: 8px 14px;
       border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .fullscreen-btn { background: #334155; color: white; }
+    .fullscreen-btn:hover { background: #475569; }
+    .close-btn { background: #ef4444; color: white; }
+    .close-btn:hover { background: #dc2626; }
+    iframe {
+      width: 92vw;
+      max-width: 980px;
+      height: 78vh;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      background: black;
     }
   </style>
 </head>
 <body>
 
-  <h1>Caz Games Hub</h1>
-  <p>Pick a game to play!</p>
+  <header>
+    <h1>Caz Games Hub</h1>
+    <p>30+ unblocked HTML5 games ready to play</p>
+    <input type="text" id="searchBar" placeholder="🔍 Search games..." oninput="filterGames()">
+  </header>
 
-  <div class="grid">
-    <!-- 1. Real Working Cookie Clicker (GitHub Mirror) -->
-    <div class="card" onclick="playGame('Cookie Clicker', 'https://ozh.github.io/cookieclicker/')">
-      <div class="icon">🍪</div>
-      <h3>Cookie Clicker</h3>
-      <span>Idle Game</span>
-    </div>
+  <div class="grid" id="gameGrid"></div>
+  <div id="emptyMsg">No games match your search!</div>
 
-    <!-- 2. Original 2048 (GitHub Pages) -->
-    <div class="card" onclick="playGame('2048', 'https://gabrielecirulli.github.io/2048/')">
-      <div class="icon">🔢</div>
-      <h3>2048</h3>
-      <span>Puzzle</span>
-    </div>
-
-    <!-- 3. Classic Snake (Fast HTML5) -->
-    <div class="card" onclick="playGame('Snake', 'https://googlesnake.github.io/')">
-      <div class="icon">🐍</div>
-      <h3>Google Snake</h3>
-      <span>Arcade</span>
-    </div>
-
-    <!-- 4. Flappy Bird (Embeddable HTML5) -->
-    <div class="card" onclick="playGame('Flappy Bird', 'https://flappybird.io/')">
-      <div class="icon">🐦</div>
-      <h3>Flappy Bird</h3>
-      <span>Classic</span>
-    </div>
-  </div>
-
+  <!-- Game Player Screen -->
   <div id="modal">
     <div class="controls">
-      <span id="gameTitle" style="color:#38bdf8; font-weight:bold; font-size:1.1rem; align-self:center;"></span>
-      <button class="close-btn" onclick="closeGame()">Close Game ✕</button>
+      <span id="gameTitle">Game</span>
+      <div class="btn-group">
+        <button class="btn fullscreen-btn" onclick="toggleFullscreen()">Fullscreen ⛶</button>
+        <button class="btn close-btn" onclick="closeGame()">Close ✕</button>
+      </div>
     </div>
     <iframe id="gameBox" src="" allowfullscreen allow="autoplay; fullscreen"></iframe>
   </div>
 
   <script>
+    const games = [
+      { title: "Cookie Clicker", cat: "Idle", icon: "🍪", url: "https://ozh.github.io/cookieclicker/" },
+      { title: "2048", cat: "Puzzle", icon: "🔢", url: "https://gabrielecirulli.github.io/2048/" },
+      { title: "Google Snake", cat: "Arcade", icon: "🐍", url: "https://googlesnake.github.io/" },
+      { title: "Flappy Bird", cat: "Classic", icon: "🐦", url: "https://flappybird.io/" },
+      { title: "Doodle Jump", cat: "Arcade", icon: "🦘", url: "https://apps.theallium.com/games/doodle-jump/" },
+      { title: "Tetris", cat: "Puzzle", icon: "🧱", url: "https://tetris.com/play-tetris" },
+      { title: "Pac-Man", cat: "Retro", icon: "🟡", url: "https://freepacman.org/" },
+      { title: "Asteroids", cat: "Retro", icon: "🚀", url: "https://freeasteroids.org/" },
+      { title: "Connect 4", cat: "Board", icon: "🔴", url: "https://papergames.io/en/connect4" },
+      { title: "Tic-Tac-Toe", cat: "Board", icon: "❌", url: "https://playtictactoe.org/" },
+      { title: "Minesweeper", cat: "Puzzle", icon: "💣", url: "https://minesweeperonline.com/" },
+      { title: "Hextris", cat: "Arcade", icon: "🔷", url: "https://hextris.io/" },
+      { title: "Wordle Unlimited", cat: "Word", icon: "🟩", url: "https://wordleunlimited.org/" },
+      { title: "Solitaire", cat: "Card", icon: "🃏", url: "https://worldofsolitaire.com/" },
+      { title: "Chess", cat: "Strategy", icon: "♟️", url: "https://lichess.org/tv/frame?theme=brown&bg=dark" },
+      { title: "Checkers", cat: "Board", icon: "⚪", url: "https://www.247checkers.com/" },
+      { title: "Sudoku", cat: "Puzzle", icon: "✏️", url: "https://sudoku.com/" },
+      { title: "Pong HTML5", cat: "Retro", icon: "🏓", url: "https://pong-2.com/" },
+      { title: "Breakout", cat: "Retro", icon: "🧱", url: "https://elgoog.im/breakout/" },
+      { title: "Chrome Dino Game", cat: "Arcade", icon: "🦖", url: "https://elgoog.im/t-rex/" },
+      { title: "Memory Match", cat: "Puzzle", icon: "🧠", url: "https://www.helpfulgames.com/subjects/brain-games/memory.html" },
+      { title: "Subway Surfers Web", cat: "Runner", icon: "🏃", url: "https://poki.com/" },
+      { title: "Space Invaders", cat: "Retro", icon: "👾", url: "https://freeinvaders.org/" },
+      { title: "Speed Typing", cat: "Skill", icon: "⌨️", url: "https://monkeytype.com/" },
+      { title: "Tower Building", cat: "Arcade", icon: "🏗️", url: "https://www.towergame.app/" },
+      { title: "Crossy Road Web", cat: "Arcade", icon: "🐔", url: "https://crossyroad.org/" },
+      { title: "Geometry Dash Lite", cat: "Platformer", icon: "📐", url: "https://geometrydashlite.io/" },
+      { title: "Paper.io 2", cat: "Multiplayer", icon: "📜", url: "https://paper-io.com/" },
+      { title: "Slope Runner", cat: "3D Running", icon: "🟢", url: "https://kbhgames.com/game/slope" },
+      { title: "BitLife Simulator", cat: "Simulation", icon: "👶", url: "https://bitlifeonline.com/" }
+    ];
+
+    const grid = document.getElementById('gameGrid');
+    const emptyMsg = document.getElementById('emptyMsg');
+
+    function renderGames(list) {
+      grid.innerHTML = '';
+      if (list.length === 0) {
+        emptyMsg.style.display = 'block';
+        return;
+      }
+      emptyMsg.style.display = 'none';
+      list.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = () => playGame(game.title, game.url);
+        card.innerHTML = `
+          <div class="icon">${game.icon}</div>
+          <h3>${game.title}</h3>
+          <span>${game.cat}</span>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterGames() {
+      const q = document.getElementById('searchBar').value.toLowerCase().trim();
+      const filtered = games.filter(g => 
+        g.title.toLowerCase().includes(q) || 
+        g.cat.toLowerCase().includes(q)
+      );
+      renderGames(filtered);
+    }
+
     function playGame(title, url) {
       document.getElementById('gameTitle').innerText = title;
       document.getElementById('gameBox').src = url;
       document.getElementById('modal').classList.add('open');
     }
+
     function closeGame() {
       document.getElementById('gameBox').src = '';
       document.getElementById('modal').classList.remove('open');
     }
+
+    function toggleFullscreen() {
+      const frame = document.getElementById('gameBox');
+      if (!document.fullscreenElement) {
+        frame.requestFullscreen().catch(err => alert("Fullscreen error: " + err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Render all games on startup
+    renderGames(games);
   </script>
 </body>
 </html>
