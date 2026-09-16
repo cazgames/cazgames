@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Five Nights: Caz Edition</title>
+  <style>
+    * { box-sizing: border-box; user-select: none; }
+    body {
+      margin: 0;
+      background: #000;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #office {
+      position: relative;
+      width: 900px;
+      height: 550px;
+      background: radial-gradient(circle at center, #2b2b2b 0%, #050505 85%);
+      border: 4px solid #333;
+      overflow: hidden;
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+    }
+    /* Static Noise overlay */
+    .static {
+      position: absolute;
+      inset: 0;
+      background: repeating-radial-gradient(circle, transparent 0, rgba(255,255,255,0.03) 1px, transparent 2px);
+      pointer-events: none;
+      z-index: 10;
+    }
+    /* Doorway Panels */
+    .door-area {
+      position: absolute;
+      top: 50px;
+      bottom: 60px;
+      width: 130px;
+      background: #111;
+      border: 3px solid #444;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+    }
+    #leftDoorArea { left: 20px; }
+    #rightDoorArea { right: 20px; }
+    .door-wall {
+      width: 100%;
+      height: 70%;
+      background: repeating-linear-gradient(0deg, #222, #222 15px, #1a1a1a 15px, #1a1a1a 30px);
+      border: 2px solid #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+    .door-wall.closed {
+      background: repeating-linear-gradient(0deg, #400, #400 15px, #300 15px, #300 30px);
+      color: #ff4444;
+      border-color: #f00;
+    }
+    .door-btn {
+      width: 100%;
+      padding: 8px 4px;
+      font-weight: bold;
+      background: #222;
+      color: #fff;
+      border: 2px solid #666;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .door-btn.activ
