@@ -99,7 +99,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.94);
+      background: rgba(0, 0, 0, 0.95);
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -119,15 +119,19 @@
       font-size: 1.2rem;
       font-weight: bold;
     }
-    .close-btn {
-      padding: 8px 16px;
-      background: #ef4444;
-      color: white;
+    .btn-group { display: flex; gap: 8px; }
+    .btn {
+      padding: 8px 14px;
       border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      font-size: 0.9rem;
     }
+    .fs-btn { background: #334155; color: white; }
+    .fs-btn:hover { background: #475569; }
+    .close-btn { background: #ef4444; color: white; }
+    .close-btn:hover { background: #dc2626; }
     iframe {
       width: 92vw;
       max-width: 980px;
@@ -152,66 +156,71 @@
   <div id="modal">
     <div class="controls">
       <span id="gameTitle">Game</span>
-      <button class="close-btn" onclick="closeGame()">Close ✕</button>
+      <div class="btn-group">
+        <button class="btn fs-btn" onclick="toggleFullscreen()">Fullscreen ⛶</button>
+        <button class="btn close-btn" onclick="closeGame()">Close ✕</button>
+      </div>
     </div>
-    <iframe id="gameBox" src="" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <iframe id="gameBox" src="" allowfullscreen allow="autoplay; fullscreen; pointer-lock"></iframe>
   </div>
 
   <script>
     const games = [
       { 
-        title: "FNAF 1", 
-        cat: "Horror", 
-        icon: "🐻", 
-        url: "https://wellsousaaa.github.io/Five-Nights-at-Freddys-Web/" 
+        title: "Minecraft 3D (Eaglercraft)", 
+        cat: "3D Sandbox", 
+        icon: "🟩", 
+        type: "embed",
+        url: "https://eaglercraft1-8.github.io/" 
       },
       { 
         title: "Cookie Clicker", 
         cat: "Idle", 
         icon: "🍪", 
+        type: "popup", // Launches clean in-page popup window so it bypasses the iframe anti-cheat
         url: "https://ozh.github.io/cookieclicker/" 
       },
       { 
-        title: "Paper Minecraft", 
+        title: "Paper Minecraft 2D", 
         cat: "Sandbox", 
         icon: "⛏️", 
+        type: "embed",
         url: "https://turbowarp.org/10128407/embed" 
       },
       { 
-        title: "2048", 
-        cat: "Puzzle", 
-        icon: "🔢", 
-        url: "https://gabrielecirulli.github.io/2048/" 
-      },
-      { 
-        title: "Hextris", 
-        cat: "Arcade", 
-        icon: "🔷", 
-        url: "https://hextris.io/" 
+        title: "FNAF 1 (Full Port)", 
+        cat: "Horror", 
+        icon: "🐻", 
+        type: "embed",
+        url: "https://turbowarp.org/225895732/embed" 
       },
       { 
         title: "Tower Building", 
         cat: "Arcade", 
         icon: "🏗️", 
+        type: "embed",
         url: "https://www.towergame.app/" 
       },
       { 
         title: "Connect 4", 
         cat: "Board", 
         icon: "🔴", 
+        type: "embed",
         url: "https://papergames.io/en/connect4" 
       },
       { 
-        title: "Tic-Tac-Toe", 
-        cat: "Board", 
-        icon: "❌", 
-        url: "https://playtictactoe.org/" 
+        title: "Flappy Bird", 
+        cat: "Arcade", 
+        icon: "🐦", 
+        type: "embed",
+        url: "https://turbowarp.org/694936302/embed" 
       },
       { 
-        title: "Speed Typing", 
-        cat: "Skill", 
-        icon: "⌨️", 
-        url: "https://monkeytype.com/" 
+        title: "Slope 3D", 
+        cat: "Runner", 
+        icon: "🟢", 
+        type: "embed",
+        url: "https://turbowarp.org/535492211/embed" 
       }
     ];
 
@@ -228,7 +237,13 @@
       list.forEach(game => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.onclick = () => playGame(game.title, game.url);
+        card.onclick = () => {
+          if (game.type === "popup") {
+            window.open(game.url, '_blank', 'width=1000,height=700,menubar=no,toolbar=no');
+          } else {
+            playGame(game.title, game.url);
+          }
+        };
         card.innerHTML = `
           <div class="icon">${game.icon}</div>
           <h3>${game.title}</h3>
@@ -258,6 +273,19 @@
       document.getElementById('modal').classList.remove('open');
     }
 
+    function toggleFullscreen() {
+      const frame = document.getElementById('gameBox');
+      if (!document.fullscreenElement) {
+        frame.requestFullscreen().catch(err => alert("Fullscreen error: " + err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    renderGames(games);
+  </script>
+</body>
+</html>
     renderGames(games);
   </script>
 </body>
