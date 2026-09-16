@@ -1,16 +1,17 @@
-## Hi there 👋
+# 🎮 Caz Games Hub
 
-<!--
-**cazgames/cazgames** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Welcome to **Caz Games Hub** — a fast, lightweight browser arcade built to run smooth web games right in your browser.
 
-Here are some ideas to get you started:
+### 🚀 Play Online
+👉 **[Launch Caz Games Hub](https://cazgames.github.io/cazgames/)**
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
+
+### ✨ Features
+- 🔍 **Instant Search:** Find your favorite games in seconds.
+- ⚡ **Zero Lag:** Lightweight HTML5 and retro classics.
+- 📱 **Clean Interface:** Dark mode UI designed for fast loading.
+- 🆓 **100% Free & Open:** No downloads or sketchy pop-ups.
+
+---
+*Created and maintained by Caz.*
