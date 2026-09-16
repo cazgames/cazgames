@@ -34,7 +34,6 @@
       color: var(--accent);
       margin: 0 0 6px 0;
       font-size: 2.2rem;
-      letter-spacing: -0.5px;
     }
     p {
       color: var(--muted);
@@ -50,7 +49,6 @@
       color: var(--text);
       outline: none;
       box-sizing: border-box;
-      transition: border-color 0.2s, box-shadow 0.2s;
     }
     #searchBar:focus {
       border-color: var(--accent);
@@ -97,7 +95,6 @@
       margin-top: 32px;
       font-size: 1.1rem;
     }
-    /* Modal / Game Player */
     #modal {
       display: none;
       position: fixed;
@@ -122,22 +119,15 @@
       font-size: 1.2rem;
       font-weight: bold;
     }
-    .btn-group {
-      display: flex;
-      gap: 8px;
-    }
-    .btn {
-      padding: 8px 14px;
+    .close-btn {
+      padding: 8px 16px;
+      background: #ef4444;
+      color: white;
       border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      font-size: 0.9rem;
     }
-    .fullscreen-btn { background: #334155; color: white; }
-    .fullscreen-btn:hover { background: #475569; }
-    .close-btn { background: #ef4444; color: white; }
-    .close-btn:hover { background: #dc2626; }
     iframe {
       width: 92vw;
       max-width: 980px;
@@ -152,21 +142,17 @@
 
   <header>
     <h1>Caz Games Hub</h1>
-    <p>30+ unblocked HTML5 games ready to play</p>
+    <p>Select any game or search below</p>
     <input type="text" id="searchBar" placeholder="🔍 Search games..." oninput="filterGames()">
   </header>
 
   <div class="grid" id="gameGrid"></div>
   <div id="emptyMsg">No games match your search!</div>
 
-  <!-- Game Player Screen -->
   <div id="modal">
     <div class="controls">
       <span id="gameTitle">Game</span>
-      <div class="btn-group">
-        <button class="btn fullscreen-btn" onclick="toggleFullscreen()">Fullscreen ⛶</button>
-        <button class="btn close-btn" onclick="closeGame()">Close ✕</button>
-      </div>
+      <button class="close-btn" onclick="closeGame()">Close ✕</button>
     </div>
     <iframe id="gameBox" src="" allowfullscreen allow="autoplay; fullscreen"></iframe>
   </div>
@@ -175,34 +161,14 @@
     const games = [
       { title: "Cookie Clicker", cat: "Idle", icon: "🍪", url: "https://ozh.github.io/cookieclicker/" },
       { title: "2048", cat: "Puzzle", icon: "🔢", url: "https://gabrielecirulli.github.io/2048/" },
-      { title: "Google Snake", cat: "Arcade", icon: "🐍", url: "https://googlesnake.github.io/" },
-      { title: "Flappy Bird", cat: "Classic", icon: "🐦", url: "https://flappybird.io/" },
-      { title: "Doodle Jump", cat: "Arcade", icon: "🦘", url: "https://apps.theallium.com/games/doodle-jump/" },
-      { title: "Tetris", cat: "Puzzle", icon: "🧱", url: "https://tetris.com/play-tetris" },
-      { title: "Pac-Man", cat: "Retro", icon: "🟡", url: "https://freepacman.org/" },
-      { title: "Asteroids", cat: "Retro", icon: "🚀", url: "https://freeasteroids.org/" },
-      { title: "Connect 4", cat: "Board", icon: "🔴", url: "https://papergames.io/en/connect4" },
-      { title: "Tic-Tac-Toe", cat: "Board", icon: "❌", url: "https://playtictactoe.org/" },
-      { title: "Minesweeper", cat: "Puzzle", icon: "💣", url: "https://minesweeperonline.com/" },
       { title: "Hextris", cat: "Arcade", icon: "🔷", url: "https://hextris.io/" },
-      { title: "Wordle Unlimited", cat: "Word", icon: "🟩", url: "https://wordleunlimited.org/" },
+      { title: "Tic-Tac-Toe", cat: "Board", icon: "❌", url: "https://playtictactoe.org/" },
+      { title: "Connect 4", cat: "Board", icon: "🔴", url: "https://papergames.io/en/connect4" },
+      { title: "Minesweeper", cat: "Puzzle", icon: "💣", url: "https://minesweeperonline.com/" },
       { title: "Solitaire", cat: "Card", icon: "🃏", url: "https://worldofsolitaire.com/" },
-      { title: "Chess", cat: "Strategy", icon: "♟️", url: "https://lichess.org/tv/frame?theme=brown&bg=dark" },
-      { title: "Checkers", cat: "Board", icon: "⚪", url: "https://www.247checkers.com/" },
-      { title: "Sudoku", cat: "Puzzle", icon: "✏️", url: "https://sudoku.com/" },
-      { title: "Pong HTML5", cat: "Retro", icon: "🏓", url: "https://pong-2.com/" },
-      { title: "Breakout", cat: "Retro", icon: "🧱", url: "https://elgoog.im/breakout/" },
-      { title: "Chrome Dino Game", cat: "Arcade", icon: "🦖", url: "https://elgoog.im/t-rex/" },
-      { title: "Memory Match", cat: "Puzzle", icon: "🧠", url: "https://www.helpfulgames.com/subjects/brain-games/memory.html" },
-      { title: "Subway Surfers Web", cat: "Runner", icon: "🏃", url: "https://poki.com/" },
-      { title: "Space Invaders", cat: "Retro", icon: "👾", url: "https://freeinvaders.org/" },
       { title: "Speed Typing", cat: "Skill", icon: "⌨️", url: "https://monkeytype.com/" },
-      { title: "Tower Building", cat: "Arcade", icon: "🏗️", url: "https://www.towergame.app/" },
-      { title: "Crossy Road Web", cat: "Arcade", icon: "🐔", url: "https://crossyroad.org/" },
-      { title: "Geometry Dash Lite", cat: "Platformer", icon: "📐", url: "https://geometrydashlite.io/" },
-      { title: "Paper.io 2", cat: "Multiplayer", icon: "📜", url: "https://paper-io.com/" },
-      { title: "Slope Runner", cat: "3D Running", icon: "🟢", url: "https://kbhgames.com/game/slope" },
-      { title: "BitLife Simulator", cat: "Simulation", icon: "👶", url: "https://bitlifeonline.com/" }
+      { title: "Tower Game", cat: "Arcade", icon: "🏗️", url: "https://www.towergame.app/" },
+      { title: "Pong HTML5", cat: "Retro", icon: "🏓", url: "https://pong-2.com/" }
     ];
 
     const grid = document.getElementById('gameGrid');
@@ -248,16 +214,6 @@
       document.getElementById('modal').classList.remove('open');
     }
 
-    function toggleFullscreen() {
-      const frame = document.getElementById('gameBox');
-      if (!document.fullscreenElement) {
-        frame.requestFullscreen().catch(err => alert("Fullscreen error: " + err.message));
-      } else {
-        document.exitFullscreen();
-      }
-    }
-
-    // Render all games on startup
     renderGames(games);
   </script>
 </body>
