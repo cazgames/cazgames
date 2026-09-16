@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Caz Games</title>
+  <title>Caz Games Hub</title>
   <style>
     body {
       margin: 0;
@@ -75,20 +75,32 @@
   <p>Pick a game to play!</p>
 
   <div class="grid">
-  <div class="card" onclick="playGame('Cookie Clicker', 'https://ozh.github.io/cookieclicker/')">
+    <!-- Cookie Clicker (GitHub Mirror - fully embeddable) -->
+    <div class="card" onclick="playGame('Cookie Clicker', 'https://ozh.github.io/cookieclicker/')">
       <div class="icon">🍪</div>
       <h3>Cookie Clicker</h3>
       <span>Idle Game</span>
     </div>
+
+    <!-- FNAF Web Port -->
+    <div class="card" onclick="playGame('FNAF 1', 'https://scratch.mit.edu/projects/415535300/embed')">
+      <div class="icon">🐻</div>
+      <h3>FNAF 1</h3>
+      <span>Horror</span>
+    </div>
+
+    <!-- 2048 -->
     <div class="card" onclick="playGame('2048', 'https://play2048.co/')">
       <div class="icon">🔢</div>
       <h3>2048</h3>
       <span>Puzzle</span>
     </div>
-    <div class="card" onclick="playGame('Google Snake', 'https://googlesnake.github.io/')">
-      <div class="icon">🐍</div>
-      <h3>Snake</h3>
-      <span>Arcade</span>
+
+    <!-- Paper Minecraft -->
+    <div class="card" onclick="playGame('Paper Minecraft', 'https://scratch.mit.edu/projects/10128407/embed')">
+      <div class="icon">⛏️</div>
+      <h3>Minecraft 2D</h3>
+      <span>Sandbox</span>
     </div>
   </div>
 
