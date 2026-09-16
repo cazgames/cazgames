@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Caz Games</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 { color: #38bdf8; margin-bottom: 5px; }
+    p { color: #94a3b8; margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 20px;
+    }
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid #334155;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: #38bdf8; }
+    .icon { font-size: 2.5rem; margin-bottom: 8px; }
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    #modal.open { display: flex; }
+    iframe {
+      width: 90vw;
+      max-width: 960px;
+      height: 75vh;
+      border: 2px solid #38bdf8;
+      border-radius: 8px;
+      background: black;
+    }
+    .close-btn {
+      align-self: flex-end;
+      margin-right: 5vw;
+      margin-bottom: 10px;
+      padding: 8px 16px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Caz Games Hub</h1>
+  <p>Pick a game to play!</p>
+
+  <div class="grid">
+    <div class="card" onclick="playGame('Cookie Clicker', 'https://orteil.dashnet.org/cookieclicker/')">
+      <div class="icon">🍪</div>
+      <h3>Cookie Clicker</h3>
+      <span>Idle Game</span>
+    </div>
+    <div class="card" onclick="playGame('2048', 'https://play2048.co/')">
+      <div class="icon">🔢</div>
+      <h3>2048</h3>
+      <span>Puzzle</span>
+    </div>
+    <div class="card" onclick="playGame('Google Snake', 'https://googlesnake.github.io/')">
+      <div class="icon">🐍</div>
+      <h3>Snake</h3>
+      <span>Arcade</span>
+    </div>
+  </div>
+
+  <div id="modal">
+    <button class="close-btn" onclick="closeGame()">Close Game ✕</button>
+    <iframe id="gameBox" src=""></iframe>
+  </div>
+
+  <script>
+    function playGame(name, url) {
+      document.getElementById('gameBox').src = url;
+      document.getElementById('modal').classList.add('open');
+    }
+    function closeGame() {
+      document.getElementById('gameBox').src = '';
+      document.getElementById('modal').classList.remove('open');
+    }
+  </script>
+</body>
+</html>
